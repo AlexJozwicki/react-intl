@@ -1,24 +1,21 @@
-/* jshint esnext:true */
+import React, { Component } from 'react';
 
-// TODO: Use `import React from "react";` when external modules are supported.
-import React from '../react';
 
-import IntlMixin from '../mixin';
+export default class FormattedMessage extends Component {
+    static contextTypes = {
+    	i18n: React.PropTypes.object
+    };
 
-var FormattedMessage = React.createClass({
-    displayName: 'FormattedMessage',
-    mixins     : [IntlMixin],
-
-    propTypes: {
+    static propTypes = {
         tagName: React.PropTypes.string,
         message: React.PropTypes.string.isRequired
-    },
+    };
 
-    getDefaultProps: function () {
-        return {tagName: 'span'};
-    },
+    static defaultProps = {
+        tagName: 'span'
+    };
 
-    render: function () {
+    render() {
         var props   = this.props;
         var tagName = props.tagName;
         var message = props.message;
@@ -58,7 +55,7 @@ var FormattedMessage = React.createClass({
 
         // Formats the `message` with the `values`, including the `token`
         // placeholders for React Element values.
-        var formattedMessage = this.formatMessage(message, values);
+        const formattedMessage = this.context.i18n.formatMessage(message, values);
 
         // Split the message into parts so the React Element values captured
         // above can be inserted back into the rendered message. This
@@ -77,6 +74,4 @@ var FormattedMessage = React.createClass({
         var elementArgs = [tagName, null].concat(children);
         return React.createElement.apply(null, elementArgs);
     }
-});
-
-export default FormattedMessage;
+}

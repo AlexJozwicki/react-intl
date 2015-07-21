@@ -1,28 +1,24 @@
-/* jshint esnext:true */
-
-// TODO: Use `import React from "react";` when external modules are supported.
-import React from '../react';
+import React, { Component } from 'react';
 
 import escape from '../escape';
-import IntlMixin from '../mixin';
 
-var FormattedHTMLMessage = React.createClass({
-    displayName: 'FormattedHTMLMessage',
-    mixins     : [IntlMixin],
 
-    propTypes: {
+export default class FormattedHTMLMessage extends Component {
+    static contextTypes = {
+    	i18n: React.PropTypes.object
+    };
+
+    static propTypes = {
         tagName: React.PropTypes.string,
         message: React.PropTypes.string.isRequired
-    },
+    };
 
-    getDefaultProps: function () {
-        return {tagName: 'span'};
-    },
+    static defaultProps ={
+        tagName: 'span'
+    };
 
-    render: function () {
-        var props   = this.props;
-        var tagName = props.tagName;
-        var message = props.message;
+    render() {
+        const { tagName, message } = this.props;
 
         // Process all the props before they are used as values when formatting
         // the ICU Message string. Since the formatted message will be injected
@@ -52,10 +48,8 @@ var FormattedHTMLMessage = React.createClass({
         // way for React to do its virtual DOM diffing.
         return React.DOM[tagName]({
             dangerouslySetInnerHTML: {
-                __html: this.formatMessage(message, values)
+                __html: this.context.i18n.formatMessage(message, values)
             }
         });
     }
-});
-
-export default FormattedHTMLMessage;
+}

@@ -1,41 +1,33 @@
-/* jshint esnext:true */
+import React, { Component } from 'react';
+import { filterFormatOptions } from './Utils';
 
-// TODO: Use `import React from "react";` when external modules are supported.
-import React from '../react';
 
-import IntlMixin from '../mixin';
+export default class FormattedDate extends Component {
+    static contextTypes = {
+    	i18n: React.PropTypes.object
+    };
 
-var FormattedDate = React.createClass({
-    displayName: 'FormattedDate',
-    mixins     : [IntlMixin],
+    static formatOptions : Array< string > = [
+        'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
+        'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
+        'timeZoneName'
+    ];
 
-    statics: {
-        formatOptions: [
-            'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
-            'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
-            'timeZoneName'
-        ]
-    },
-
-    propTypes: {
+    static propTypes = {
         format: React.PropTypes.string,
         value : React.PropTypes.any.isRequired
-    },
+    };
 
-    getDefaultProps: function () {
-        return {tagName: 'span'};
-    },
+    static defaultProps = {
+        tagName: 'span'
+    };
 
-    render: function () {
-        var props    = this.props;
-        var tagName  = props.tagName;
-        var value    = props.value;
-        var format   = props.format;
-        var defaults = format && this.getNamedFormat('date', format);
-        var options  = FormattedDate.filterFormatOptions(props, defaults);
+    render() {
+        const { tagName, value, format } = this.props;
 
-        return React.DOM[tagName](null, this.formatDate(value, options));
+        const defaults = format && this.getNamedFormat('date', format);
+        const options  = filterFormatOptions( this.props, FormattedDate.formatOptions, defaults );
+
+        return React.createElement( tagName, this.props, this.context.i18n.formatDate(value, options) );
     }
-});
-
-export default FormattedDate;
+}

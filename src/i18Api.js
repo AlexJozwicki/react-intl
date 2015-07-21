@@ -1,24 +1,13 @@
-/* jshint esnext:true */
+import React, { Component } from 'react';
 
-// TODO: Use `import React from "react";` when external modules are supported.
-import React from './react';
+import IntlMessageFormat    from 'intl-messageformat';
+import IntlRelativeFormat   from 'intl-relativeformat';
+import createFormatCache    from 'intl-format-cache';
 
-import IntlMessageFormat from 'intl-messageformat';
-import IntlRelativeFormat from 'intl-relativeformat';
-import createFormatCache from 'intl-format-cache';
 
-// -----------------------------------------------------------------------------
-
-var typesSpec = {
-    locales: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.array
-    ]),
-
-    formats : React.PropTypes.object,
-    messages: React.PropTypes.object
-};
-
+/**
+ * Helper function
+ */
 function assertIsDate(date, errMsg) {
     // Determine if the `date` is valid by checking if it is finite, which is
     // the same way that `Intl.DateTimeFormat#format()` checks.
@@ -27,68 +16,72 @@ function assertIsDate(date, errMsg) {
     }
 }
 
-export default {
-    statics: {
-        filterFormatOptions: function (obj, defaults) {
-            if (!defaults) { defaults = {}; }
 
-            return (this.formatOptions || []).reduce(function (opts, name) {
-                if (obj.hasOwnProperty(name)) {
-                    opts[name] = obj[name];
-                } else if (defaults.hasOwnProperty(name)) {
-                    opts[name] = defaults[name];
-                }
+/**
+ * This is a base start for the top-most element of the application, injecting the API as a context.
+ */
+export class i18nApp extends Component {
+    constructor( i18nApi ) {
+        super();
+        this.i18nApi = i18nApi;
+    }
 
-                return opts;
-            }, {});
-        }
-    },
-
-    propTypes        : typesSpec,
-    contextTypes     : typesSpec,
-    childContextTypes: typesSpec,
-
-    getNumberFormat  : createFormatCache(Intl.NumberFormat),
-    getDateTimeFormat: createFormatCache(Intl.DateTimeFormat),
-    getMessageFormat : createFormatCache(IntlMessageFormat),
-    getRelativeFormat: createFormatCache(IntlRelativeFormat),
-
-    getChildContext: function () {
-        var context = this.context;
-        var props   = this.props;
-
+    getChildContext() {
         return {
-            locales:  props.locales  || context.locales,
-            formats:  props.formats  || context.formats,
-            messages: props.messages || context.messages
+            i18n: i18nApi
         };
-    },
+    }
 
-    formatDate: function (date, options) {
+    static childContextTypes = {
+    	i18n: React.PropTypes.func
+    };
+}
+
+
+
+/**
+ *
+ * This is the i18n API that should be passed as a context throughout the application.
+ * Every component from this package uses this.
+ *
+ */
+export default class i18nApi {
+    constructor( locales, messages, formats ) {
+        this.messages = messages;
+        this.formats = formats;
+        this.locales = locales;
+
+        this.getNumberFormat    = createFormatCache( Intl.NumberFormat );
+        this.getDateTimeFormat  = createFormatCache( Intl.DateTimeFormat );
+        this.getMessageFormat   = createFormatCache( IntlMessageFormat );
+        this.getRelativeFormat  = createFormatCache( IntlRelativeFormat );
+    }
+
+    formatDate( date : string | Date, options : Object ) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatDate()');
         return this._format('date', date, options);
-    },
+    }
 
-    formatTime: function (date, options) {
+    formatTime(date : string | Date, options) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatTime()');
         return this._format('time', date, options);
-    },
+    }
 
-    formatRelative: function (date, options, formatOptions) {
+    formatRelative(date : string | Date, options, formatOptions) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
         return this._format('relative', date, options, formatOptions);
-    },
+    }
 
-    formatNumber: function (num, options) {
+    formatNumber(num : number, options) {
         return this._format('number', num, options);
-    },
+    }
 
-    formatMessage: function (message, values) {
-        var locales = this.props.locales || this.context.locales;
-        var formats = this.props.formats || this.context.formats;
+    formatMessage(message : string | Function, values) {
+        var locales = this.locales;
+        var formats = this.formats;
 
         // When `message` is a function, assume it's an IntlMessageFormat
         // instance's `format()` method passed by reference, and call it. This
@@ -102,10 +95,10 @@ export default {
         }
 
         return message.format(values);
-    },
+    }
 
-    getIntlMessage: function (path) {
-        var messages  = this.props.messages || this.context.messages;
+    getIntlMessage( path : string ) : string {
+        var messages  = this.messages;
         var pathParts = path.split('.');
 
         var message;
@@ -121,10 +114,10 @@ export default {
         }
 
         return message;
-    },
+    }
 
-    getNamedFormat: function (type, name) {
-        var formats = this.props.formats || this.context.formats;
+    getNamedFormat( type : string, name : string ) {
+        var formats = this.formats;
         var format  = null;
 
         try {
@@ -138,10 +131,10 @@ export default {
         }
 
         return format;
-    },
+    }
 
-    _format: function (type, value, options, formatOptions) {
-        var locales = this.props.locales || this.context.locales;
+    _format(type : string, value, options, formatOptions) {
+        var locales = this.locales;
 
         if (options && typeof options === 'string') {
             options = this.getNamedFormat(type, options);

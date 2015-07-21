@@ -1,44 +1,36 @@
-/* jshint esnext:true */
+import React, { Component } from 'react';
+import { filterFormatOptions } from './Utils';
 
-// TODO: Use `import React from "react";` when external modules are supported.
-import React from '../react';
 
-import IntlMixin from '../mixin';
+export default class FormattedRelative extends Component {
+    static contextTypes = {
+    	i18n: React.PropTypes.object
+    };
 
-var FormattedRelative = React.createClass({
-    displayName: 'FormattedRelative',
-    mixins     : [IntlMixin],
+    static formatOptions : Array< string > = [
+        'style', 'units'
+    ];
 
-    statics: {
-        formatOptions: [
-            'style', 'units'
-        ]
-    },
-
-    propTypes: {
+    static propTypes = {
         format: React.PropTypes.string,
         value : React.PropTypes.any.isRequired,
         now   : React.PropTypes.any
-    },
+    };
 
-    getDefaultProps: function () {
-        return {tagName: 'span'};
-    },
+    static defaultProps = {
+        tagName: 'span'
+    };
 
-    render: function () {
-        var props    = this.props;
-        var tagName  = props.tagName;
-        var value    = props.value;
-        var format   = props.format;
-        var defaults = format && this.getNamedFormat('relative', format);
-        var options  = FormattedRelative.filterFormatOptions(props, defaults);
+    render() {
+        const { tagName, value, format, now } = this.props;
 
-        var formattedRelativeTime = this.formatRelative(value, options, {
-            now: props.now
-        });
+        const defaults = format && this.context.i18n.getNamedFormat('relative', format);
+        const options  = filterFormatOptions( this.props, FormattedRelative.formatOptions, defaults );
 
-        return React.DOM[tagName](null, formattedRelativeTime);
+        const formattedRelativeTime = this.context.i18n.formatRelative( value, options, {
+            now
+        } );
+
+        return React.createElement( tagName, this.props, formattedRelativeTime );
     }
-});
-
-export default FormattedRelative;
+}

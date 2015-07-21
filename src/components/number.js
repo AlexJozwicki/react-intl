@@ -1,42 +1,33 @@
-/* jshint esnext:true */
+import React, { Component } from 'react';
+import { filterFormatOptions } from './Utils';
 
-// TODO: Use `import React from "react";` when external modules are supported.
-import React from '../react';
 
-import IntlMixin from '../mixin';
+export default class FormattedNumber extends Component {
+    static contextTypes = {
+    	i18n: React.PropTypes.object
+    };
 
-var FormattedNumber = React.createClass({
-    displayName: 'FormattedNumber',
-    mixins     : [IntlMixin],
+    static formatOptions : Array< string > = [
+        'localeMatcher', 'style', 'currency', 'currencyDisplay',
+        'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
+        'maximumFractionDigits', 'minimumSignificantDigits',
+        'maximumSignificantDigits'
+    ];
 
-    statics: {
-        formatOptions: [
-            'localeMatcher', 'style', 'currency', 'currencyDisplay',
-            'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
-            'maximumFractionDigits', 'minimumSignificantDigits',
-            'maximumSignificantDigits'
-        ]
-    },
-
-    propTypes: {
+    static propTypes = {
         format: React.PropTypes.string,
         value : React.PropTypes.any.isRequired
-    },
+    };
 
-    getDefaultProps: function () {
-        return {tagName: 'span'};
-    },
+    static defaultProps = {
+        tagName: 'span'
+    };
 
-    render: function () {
-        var props    = this.props;
-        var tagName  = props.tagName;
-        var value    = props.value;
-        var format   = props.format;
-        var defaults = format && this.getNamedFormat('number', format);
-        var options  = FormattedNumber.filterFormatOptions(props, defaults);
+    render() {
+        const { tagName, value, format } = this.props;
+        const defaults = format && this.context.i18n.getNamedFormat( 'number', format );
+        const options  = filterFormatOptions( this.props, FormattedNumber.formatOptions, defaults );
 
-        return React.DOM[tagName](null, this.formatNumber(value, options));
+        return React.createElement( tagName, this.props, this.formatNumber( value, options ) );
     }
-});
-
-export default FormattedNumber;
+}

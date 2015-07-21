@@ -1,5 +1,3 @@
-/* jshint esnext:true */
-
 /*
 HTML escaping implementation is the same as React's (on purpose.) Therefore, it
 has the following Copyright and Licensing:
