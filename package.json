@@ -1,20 +1,22 @@
 {
-  "name": "react-intl",
-  "version": "1.2.0",
-  "description": "React Components for internationalization.",
+  "name": "react-intl-es6",
+  "version": "1.0.0-alpha1",
+  "description": "React ES6 Components for internationalization.",
   "keywords": [
+    "es6",
     "intl",
     "i18n",
     "react",
     "reactjs"
   ],
-  "author": "Caridy Patino <caridy@gmail.com>",
+  "author": "Alexandre Jozwicki <contact@alexandrejozwicki.com>",
   "contributors": [
+    "Caridy Patino <caridy@gmail.com>",
     "Eric Ferraiuolo <eferraiuolo@gmail.com>"
   ],
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/yahoo/react-intl/issues"
+    "url": "https://github.com/AlexJozwicki/react-intl/issues"
   },
   "repository": {
     "type": "git",
@@ -26,34 +28,24 @@
     "./lib/locales": false,
     "./lib/locales.js": false
   },
-  "dependencies": {
+  "peerDependencies": {
     "intl-format-cache": "2.0.4",
     "intl-messageformat": "1.1.0",
     "intl-relativeformat": "1.1.0",
-    "react": ">=0.11.2 <1.0.0"
+    "react": ">=0.13.3 <1.0.0"
   },
   "devDependencies": {
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "run-sequence": "^1.1.1",
+    "watchify": "^3.2.3",
     "es5-shim": "^4.1.0",
     "expect.js": "^0.3.1",
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^3.3.0",
-    "grunt-bundle-jsnext-lib": "^0.5.0",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-connect": "^0.9.0",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-uglify": "^0.8.0",
-    "grunt-extract-cldr-data": "2.1.1",
-    "grunt-json-remove-fields": "git://github.com/ericf/grunt-json-remove-fields#improve-files-and-output",
-    "grunt-saucelabs": "^8.3.2",
     "intl": "^0.1.4",
     "mocha": "^2.0.1"
   },
   "scripts": {
-    "prepublish": "grunt",
-    "travis": "./tests/smoke/saucelabs.sh"
   },
-  "homepage": "https://github.com/yahoo/react-intl"
+  "homepage": "https://github.com/AlexJozwicki/react-intl"
 }

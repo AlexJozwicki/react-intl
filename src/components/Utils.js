@@ -7,5 +7,5 @@ export function filterFormatOptions( obj, formatOptions = [], defaults = {} ) {
         }
 
         return opts;
-    } {});
+    }, {} );
 }

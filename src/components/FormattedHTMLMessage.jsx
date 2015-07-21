@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import escape from '../escape';
+import escape from './escape';
 
 
 export default class FormattedHTMLMessage extends Component {
