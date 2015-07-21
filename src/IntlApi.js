@@ -70,7 +70,7 @@ export default class IntlApi {
         return message.format(values);
     }
 
-    getIntlMessage( path : string ) : string {
+    getMessage( path : string ) : string {
         var messages  = this.messages;
         var pathParts = path.split('.');
 
