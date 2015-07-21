@@ -4,7 +4,7 @@ import { filterFormatOptions } from './Utils';
 
 export default class FormattedDate extends Component {
     static contextTypes = {
-    	i18n: React.PropTypes.object
+    	intl: React.PropTypes.object
     };
 
     static formatOptions : Array< string > = [
@@ -28,6 +28,6 @@ export default class FormattedDate extends Component {
         const defaults = format && this.getNamedFormat('date', format);
         const options  = filterFormatOptions( this.props, FormattedDate.formatOptions, defaults );
 
-        return React.createElement( tagName, this.props, this.context.i18n.formatDate(value, options) );
+        return React.createElement( tagName, { className }, this.context.intl.formatDate(value, options) );
     }
 }

@@ -4,7 +4,7 @@ import { filterFormatOptions } from './Utils';
 
 export default class FormattedTime extends Component {
     static contextTypes = {
-    	i18n: React.PropTypes.object
+    	intl: React.PropTypes.object
     };
 
     static formatOptions : Array< string > = [
@@ -25,9 +25,9 @@ export default class FormattedTime extends Component {
     render() {
         const { tagName, value, format } = this.props;
 
-        const defaults = format && this.context.i18n.getNamedFormat('time', format);
+        const defaults = format && this.context.intl.getNamedFormat('time', format);
         const options  = filterFormatOptions( this.props, FormattedTime.formatOptions, defaults );
 
-        return React.createElement( tagName, this.props, this.context.i18n.formatTime(value, options) );
+        return React.createElement( tagName, { className }, this.context.intl.formatTime(value, options) );
     }
 }

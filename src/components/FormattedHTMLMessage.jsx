@@ -5,7 +5,7 @@ import escape from './escape';
 
 export default class FormattedHTMLMessage extends Component {
     static contextTypes = {
-    	i18n: React.PropTypes.object
+    	intl: React.PropTypes.object
     };
 
     static propTypes = {
@@ -48,7 +48,7 @@ export default class FormattedHTMLMessage extends Component {
         // way for React to do its virtual DOM diffing.
         return React.DOM[tagName]({
             dangerouslySetInnerHTML: {
-                __html: this.context.i18n.formatMessage(message, values)
+                __html: this.context.intl.formatMessage(message, values)
             }
         });
     }

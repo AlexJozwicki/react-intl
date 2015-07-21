@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 export default class FormattedMessage extends Component {
     static contextTypes = {
-    	i18n: React.PropTypes.object
+    	intl: React.PropTypes.object
     };
 
     static propTypes = {
@@ -55,7 +55,7 @@ export default class FormattedMessage extends Component {
 
         // Formats the `message` with the `values`, including the `token`
         // placeholders for React Element values.
-        const formattedMessage = this.context.i18n.formatMessage(message, values);
+        const formattedMessage = this.context.intl.formatMessage(message, values);
 
         // Split the message into parts so the React Element values captured
         // above can be inserted back into the rendered message. This

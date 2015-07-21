@@ -4,7 +4,7 @@ import { filterFormatOptions } from './Utils';
 
 export default class FormattedRelative extends Component {
     static contextTypes = {
-    	i18n: React.PropTypes.object
+    	intl: React.PropTypes.object
     };
 
     static formatOptions : Array< string > = [
@@ -24,13 +24,13 @@ export default class FormattedRelative extends Component {
     render() {
         const { tagName, value, format, now } = this.props;
 
-        const defaults = format && this.context.i18n.getNamedFormat('relative', format);
+        const defaults = format && this.context.intl.getNamedFormat('relative', format);
         const options  = filterFormatOptions( this.props, FormattedRelative.formatOptions, defaults );
 
-        const formattedRelativeTime = this.context.i18n.formatRelative( value, options, {
+        const formattedRelativeTime = this.context.intl.formatRelative( value, options, {
             now
         } );
 
-        return React.createElement( tagName, this.props, formattedRelativeTime );
+        return React.createElement( tagName, { className }, formattedRelativeTime );
     }
 }
