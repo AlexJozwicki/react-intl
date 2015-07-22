@@ -23,9 +23,9 @@ export default class FormattedDate extends Component {
     };
 
     render() {
-        const { tagName, value, format } = this.props;
+        const { tagName, value, format, className } = this.props;
 
-        const defaults = format && this.getNamedFormat('date', format);
+        const defaults = format && this.context.intl.getNamedFormat('date', format);
         const options  = filterFormatOptions( this.props, FormattedDate.formatOptions, defaults );
 
         return React.createElement( tagName, { className }, this.context.intl.formatDate(value, options) );

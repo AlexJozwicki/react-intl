@@ -1,14 +1,14 @@
-import IntlMessageFormat from 'intl-messageformat';
-import IntlRelativeFormat from 'intl-relativeformat';
+import IntlMessageFormat    from 'intl-messageformat';
+import IntlRelativeFormat   from 'intl-relativeformat';
 
-import defaultLocale from './en';
+import defaultLocale        from './en';
 
-import FormattedDate from './components/date';
-import FormattedTime from './components/time';
-import FormattedRelative from './components/relative';
-import FormattedNumber from './components/number';
-import FormattedMessage from './components/message';
-import FormattedHTMLMessage from './components/html-message';
+import FormattedDate        from './components/FormattedDate';
+import FormattedTime        from './components/FormattedTime';
+import FormattedRelative    from './components/FormattedRelative';
+import FormattedNumber      from './components/FormattedNumber';
+import FormattedMessage     from './components/FormattedMessage';
+import FormattedHTMLMessage from './components/FormattedHTMLMessage';
 
 export {
     FormattedDate,

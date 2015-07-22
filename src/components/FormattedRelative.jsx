@@ -22,7 +22,7 @@ export default class FormattedRelative extends Component {
     };
 
     render() {
-        const { tagName, value, format, now } = this.props;
+        const { tagName, value, format, now, className } = this.props;
 
         const defaults = format && this.context.intl.getNamedFormat('relative', format);
         const options  = filterFormatOptions( this.props, FormattedRelative.formatOptions, defaults );

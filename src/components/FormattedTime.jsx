@@ -23,7 +23,7 @@ export default class FormattedTime extends Component {
     };
 
     render() {
-        const { tagName, value, format } = this.props;
+        const { tagName, value, format, className } = this.props;
 
         const defaults = format && this.context.intl.getNamedFormat('time', format);
         const options  = filterFormatOptions( this.props, FormattedTime.formatOptions, defaults );
