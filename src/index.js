@@ -1,4 +1,6 @@
 export {
+    Intl,
+    IntlApi,
     FormattedDate,
     FormattedTime,
     FormattedRelative,

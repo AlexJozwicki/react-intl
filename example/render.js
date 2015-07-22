@@ -1,21 +1,8 @@
-// this script is meant to run in nodejs to output the rendered content on the server side
+import { Intl } from 'react-intl-es6';
+import ContainerComponent from './src/components';
 
-// IMPORTANT: make sure you install the jsx CLI: `npm install -g react-tools`, and
-//            run `jsx src/ build/` within the `example/` folder to render the content on the server side.
 
-global.Intl = require('intl');
-
-// making React a global variable on the server side
-global.React = require('react');
-// requiring the Intl mixin
-global.ReactIntl = require('../'); // require('react-intl');
-// alas for backcompat
-global.ReactIntlMixin = ReactIntl;
-
-// requiring components
-require('./build/components.js');
-
-var i18n = {
+const i18n = {
   locales: ["en-US"],
   messages: {
     SHORT: "{product} cost {price, number, usd} if ordered by {deadline, date, medium}",
@@ -24,11 +11,17 @@ var i18n = {
   }
 };
 
-var Container = React.createFactory(global.ContainerComponent);
 
-console.log(React.renderToString(
-  Container({
-    locales: i18n.locales,
-    messages: i18n.messages
-  })
-));
+class App extends Intl {
+    constructor() {
+        super( i18n.locales, i18n.messages );
+    }
+
+    render() {
+        return (
+            <ContainerComponent />
+        );
+    }
+}
+
+console.log( React.renderToString( <App/> ) );
