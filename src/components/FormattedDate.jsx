@@ -14,8 +14,12 @@ export default class FormattedDate extends Component {
     ];
 
     static propTypes = {
-        format: React.PropTypes.string,
-        value : React.PropTypes.any.isRequired
+        format  : React.PropTypes.oneOfType([
+          React.PropTypes.string,
+          React.PropTypes.object
+        ]),
+
+        value   : React.PropTypes.any.isRequired
     };
 
     static defaultProps = {
@@ -25,7 +29,7 @@ export default class FormattedDate extends Component {
     render() {
         const { tagName, value, format, className } = this.props;
 
-        const defaults = format && this.context.intl.getNamedFormat('date', format);
+        const defaults = format && this.context.intl.getFormat( 'date', format );
         const options  = filterFormatOptions( this.props, FormattedDate.formatOptions, defaults );
 
         return React.createElement( tagName, { className }, this.context.intl.formatDate(value, options) );

@@ -15,7 +15,10 @@ export default class FormattedNumber extends Component {
     ];
 
     static propTypes = {
-        format: React.PropTypes.string,
+        format  : React.PropTypes.oneOfType([
+          React.PropTypes.string,
+          React.PropTypes.object
+        ]),
         value : React.PropTypes.any.isRequired
     };
 
@@ -25,7 +28,7 @@ export default class FormattedNumber extends Component {
 
     render() {
         const { tagName, value, format, className } = this.props;
-        const defaults = format && this.context.intl.getNamedFormat( 'number', format );
+        const defaults = format && this.context.intl.getFormat( 'number', format );
         const options  = filterFormatOptions( this.props, FormattedNumber.formatOptions, defaults );
 
         return React.createElement( tagName, { className }, this.context.intl.formatNumber( value, options ) );

@@ -73,19 +73,21 @@ export default class Container extends Component {
 
     static defaultProps = {
         someTimestamp: 1409939308585,
-            locales: ["en-US"],
-            formats: {
-            date: {
+        locales: ["en-US"],
+
+    };
+
+    static formats = {
+        date: {
             "time-style": {
-            hour: "numeric",
-            minute: "numeric",
-            second: "numeric"
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric"
             }
-            },
-            number: {
+        },
+        number: {
             eur: { style: 'currency', currency: 'EUR' },
             usd: { style: 'currency', currency: 'USD' }
-            }
         }
     };
 
@@ -105,11 +107,11 @@ export default class Container extends Component {
 
             <h2>formatDate() method</h2>
             <h3>default</h3>
-            {this.formatDate(this.props.someTimestamp)}
+            {this.context.intl.formatDate(this.props.someTimestamp)}
             <h3>with options</h3>
-            {this.formatDate(this.props.someTimestamp, { hour: 'numeric', minute: 'numeric' })}
+            {this.context.intl.formatDate(this.props.someTimestamp, { hour: 'numeric', minute: 'numeric' })}
             <h3>with custom format</h3>
-            {this.formatDate(this.props.someTimestamp, "time-style")}
+            {this.context.intl.formatDate(this.props.someTimestamp, Container.formats[ "time-style" ]}
 
             <h2>FormattedDate component</h2>
             <h3>default</h3>
@@ -117,7 +119,7 @@ export default class Container extends Component {
             <h3>with options</h3>
             <FormattedDate value={this.props.someTimestamp} hour="numeric" minute="numeric" />
             <h3>with custom format</h3>
-            <FormattedDate value={this.props.someTimestamp} format="time-style" />
+            <FormattedDate value={this.props.someTimestamp} format={Container.formats[ "time-style" ]} />
 
             <hr/>
 
@@ -125,11 +127,11 @@ export default class Container extends Component {
 
             <h2>formatNumber() method</h2>
             <h3>default</h3>
-            {this.formatNumber(400)}
+            {this.context.intl.formatNumber(400)}
             <h3>with options</h3>
-            {this.formatNumber(0.40, { style: 'percent' })}
+            {this.context.intl.formatNumber(0.40, { style: 'percent' })}
             <h3>with custom format</h3>
-            {this.formatNumber(400, "eur")}
+            {this.context.intl.formatNumber(400, "eur")}
 
             <h2>FormattedNumber component</h2>
             <h3>default</h3>
@@ -144,7 +146,7 @@ export default class Container extends Component {
             <h1>Message</h1>
 
             <h3>formatMessage() method</h3>
-            {this.formatMessage(this.getIntlMessage('LONG'), {
+            {this.context.intl.formatMessage(this.context.intl.getMessage('LONG'), {
             product: 'oranges',
             price: 40000.004,
             deadline: this.props.someTimestamp,
@@ -152,57 +154,57 @@ export default class Container extends Component {
             })}
 
             <h3>FormattedMessage component</h3>
-            <FormattedMessage message={this.getIntlMessage('LONG')}
-            product="oranges"
-            price={40000.004}
-            deadline={this.props.someTimestamp}
-            timeZone="UTC" />
+            <FormattedMessage message={this.context.intl.getMessage('LONG')}
+                product="oranges"
+                price={40000.004}
+                deadline={this.props.someTimestamp}
+                timeZone="UTC" />
 
             <hr/>
 
             <h1>Message with HTML</h1>
 
             <h3>FormattedMessage component with HTML</h3>
-            <FormattedMessage message={this.getIntlMessage('LONG')}
-            product={<strong>oranges</strong>}
-            price={40000.004}
-            deadline={this.props.someTimestamp}
-            timeZone="UTC" />
+            <FormattedMessage message={this.context.intl.getMessage('LONG')}
+                product={<strong>oranges</strong>}
+                price={40000.004}
+                deadline={this.props.someTimestamp}
+                timeZone="UTC" />
 
             <h3>FormattedMessage component with XSS attempt</h3>
-            <FormattedMessage message={this.getIntlMessage('LONG')}
-            product="oranges</span><script>alert('pwnd!');</script>"
-            price={40000.004}
-            deadline={this.props.someTimestamp}
-            timeZone="UTC" />
+            <FormattedMessage message={this.context.intl.getMessage('LONG')}
+                product="oranges</span><script>alert('pwnd!');</script>"
+                price={40000.004}
+                deadline={this.props.someTimestamp}
+                timeZone="UTC" />
 
             <h3>FormattedMessage component with custom tagName</h3>
-            <FormattedMessage tagName="p" message={this.getIntlMessage('LONG')}
-            product={<strong>oranges</strong>}
-            price={40000.004}
-            deadline={this.props.someTimestamp}
-            timeZone="UTC" />
+            <FormattedMessage tagName="p" message={this.context.intl.getMessage('LONG')}
+                product={<strong>oranges</strong>}
+                price={40000.004}
+                deadline={this.props.someTimestamp}
+                timeZone="UTC" />
 
             <h3>FormattedHTMLMessage component</h3>
-            <FormattedHTMLMessage message={this.getIntlMessage('LONG_WITH_HTML')}
-            product="oranges"
-            price={40000.004}
-            deadline={this.props.someTimestamp}
-            timeZone="UTC" />
+            <FormattedHTMLMessage message={this.context.intl.getMessage('LONG_WITH_HTML')}
+                product="oranges"
+                price={40000.004}
+                deadline={this.props.someTimestamp}
+                timeZone="UTC" />
 
             <h3>FormattedHTMLMessage component with XSS attempt</h3>
-            <FormattedHTMLMessage message={this.getIntlMessage('LONG_WITH_HTML')}
-            product="oranges</span><script>alert('pwnd!');</script>"
-            price={40000.004}
-            deadline={this.props.someTimestamp}
-            timeZone="UTC" />
+            <FormattedHTMLMessage message={this.context.intl.getMessage('LONG_WITH_HTML')}
+                product="oranges</span><script>alert('pwnd!');</script>"
+                price={40000.004}
+                deadline={this.props.someTimestamp}
+                timeZone="UTC" />
 
             <h3>FormattedHTMLMessage component with custom tagName</h3>
-            <FormattedHTMLMessage tagName="p" message={this.getIntlMessage('LONG_WITH_HTML')}
-            product="oranges"
-            price={40000.004}
-            deadline={this.props.someTimestamp}
-            timeZone="UTC" />
+                <FormattedHTMLMessage tagName="p" message={this.context.intl.getMessage('LONG_WITH_HTML')}
+                product="oranges"
+                price={40000.004}
+                deadline={this.props.someTimestamp}
+                timeZone="UTC" />
 
             <hr/>
 

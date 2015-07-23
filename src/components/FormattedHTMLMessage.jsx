@@ -18,7 +18,7 @@ export default class FormattedHTMLMessage extends Component {
     };
 
     render() {
-        const { tagName, message } = this.props;
+        const { tagName, message, className } = this.props;
 
         // Process all the props before they are used as values when formatting
         // the ICU Message string. Since the formatted message will be injected
@@ -46,7 +46,8 @@ export default class FormattedHTMLMessage extends Component {
         //
         // Note: There's a perf impact of using this component since there's no
         // way for React to do its virtual DOM diffing.
-        return React.DOM[tagName]({
+        return React.createElement( tagName, {
+            className,
             dangerouslySetInnerHTML: {
                 __html: this.context.intl.formatMessage(message, values)
             }

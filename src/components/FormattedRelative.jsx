@@ -12,7 +12,10 @@ export default class FormattedRelative extends Component {
     ];
 
     static propTypes = {
-        format: React.PropTypes.string,
+        format  : React.PropTypes.oneOfType([
+          React.PropTypes.string,
+          React.PropTypes.object
+        ]),
         value : React.PropTypes.any.isRequired,
         now   : React.PropTypes.any
     };
@@ -24,7 +27,7 @@ export default class FormattedRelative extends Component {
     render() {
         const { tagName, value, format, now, className } = this.props;
 
-        const defaults = format && this.context.intl.getNamedFormat('relative', format);
+        const defaults = format && this.context.intl.getFormat('relative', format);
         const options  = filterFormatOptions( this.props, FormattedRelative.formatOptions, defaults );
 
         const formattedRelativeTime = this.context.intl.formatRelative( value, options, {

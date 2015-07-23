@@ -89,6 +89,15 @@ export default class IntlApi {
         return message;
     }
 
+    getFormat( type: string, format : string | Object ) {
+        if( typeof format === 'string' ) {
+            return this.getNamedFormat( type, format );
+        }
+        else {
+            return format;
+        }
+    }
+
     getNamedFormat( type : string, name : string ) {
         var formats = this.formats;
         var format  = null;

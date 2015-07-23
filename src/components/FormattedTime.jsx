@@ -14,7 +14,10 @@ export default class FormattedTime extends Component {
     ];
 
     static propTypes = {
-        format: React.PropTypes.string,
+        format  : React.PropTypes.oneOfType([
+          React.PropTypes.string,
+          React.PropTypes.object
+        ]),
         value : React.PropTypes.any.isRequired
     };
 
@@ -25,7 +28,7 @@ export default class FormattedTime extends Component {
     render() {
         const { tagName, value, format, className } = this.props;
 
-        const defaults = format && this.context.intl.getNamedFormat('time', format);
+        const defaults = format && this.context.intl.getFormat('time', format);
         const options  = filterFormatOptions( this.props, FormattedTime.formatOptions, defaults );
 
         return React.createElement( tagName, { className }, this.context.intl.formatTime(value, options) );

@@ -1,20 +1,12 @@
-[React Intl][]
+[React Intl ES6][]
 ==============
 
-This library provides [React][] Components and a Mixin for internationalizing React web apps. The components provide a declarative way to format dates, numbers, and string messages, including pluralization.
-
-[![npm Version][npm-badge]][npm]
-[![Build Status][travis-badge]][travis]
-[![Dependency Status][david-badge]][david]
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/react-intl.svg)](https://saucelabs.com/u/react-intl)
+This library provides [React][] ES6 Components for internationalizing React web apps. The components provide a declarative way to format dates, numbers, and string messages, including pluralization.
 
 Overview
 --------
 
-**React Intl is part of [FormatJS][], the docs can be found on the website:**
-
-**<http://formatjs.io/react/>**
+**React Intl ES6 is a fork of React Intl - the docs can be found on the website:**
 
 ### Features
 
@@ -31,22 +23,28 @@ Overview
 There are many examples [on the website][React Intl], but here's a comprehensive one:
 
 ```jsx
-var IntlMixin         = ReactIntl.IntlMixin;
 var FormattedMessage  = ReactIntl.FormattedMessage;
 var FormattedRelative = ReactIntl.FormattedRelative;
+import {
+    Intl,
+    FormattedRelative,
+    FormattedMessage,
+} from 'react-intl-es6';
 
-var PostMeta = React.createClass({
-    mixins: [IntlMixin],
+class PostMeta extends Component {
+    static contextTypes = {
+    	intl: React.PropTypes.object
+    };
 
-    render: function () {
+    render() {
         return (
             <FormattedMessage
-                message={this.getIntlMessage('post.meta')}
+                message={this.context.intl.getMessage('post.meta')}
                 num={this.props.post.comments.length}
                 ago={<FormattedRelative value={this.props.post.date} />} />
         );
     }
-});
+}
 
 var post = {
     date    : 1422046290531,
@@ -62,8 +60,20 @@ var intlData = {
     }
 };
 
+class App extends Intl {
+    constructor() {
+        super( intlData.locales, intlData.messages );
+    }
+
+    render() {
+        return (
+            <PostMeta post={post} />
+        );
+    }
+}
+
 React.render(
-    <PostMeta post={post} {...intlData} />,
+    <App />,
     document.getElementById('container')
 );
 ```

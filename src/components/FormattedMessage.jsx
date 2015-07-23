@@ -17,8 +17,7 @@ export default class FormattedMessage extends Component {
 
     render() {
         var props   = this.props;
-        var tagName = props.tagName;
-        var message = props.message;
+        const { tagName, message, className } = this.props;
 
         // Creates a token with a random guid that should not be guessable or
         // conflict with other parts of the `message` string.
@@ -71,7 +70,6 @@ export default class FormattedMessage extends Component {
                 return elements[part] || part;
             });
 
-        var elementArgs = [tagName, null].concat(children);
-        return React.createElement.apply(null, elementArgs);
+        return React.createElement( tagName, { className }, ...children );
     }
 }
