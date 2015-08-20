@@ -25,8 +25,8 @@ export default class FormattedHTMLMessage extends Component {
         // via `innerHTML`, all String-based values need to be HTML-escaped. Any
         // React Elements that are passed as props will be rendered to a static
         // markup string that is presumed to be safe.
-        var values = Object.keys(props).reduce(function (values, name) {
-            var value = props[name];
+        var values = Object.keys(this.props).reduce( ( values, name ) => {
+            var value = this.props[name];
 
             if (typeof value === 'string') {
                 value = escape(value);
