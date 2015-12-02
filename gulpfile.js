@@ -37,7 +37,7 @@ gulp.task( 'copy-md', function() {
 
 gulp.task( 'copy-package-json', function( cb ) {
     // TODO: create folder build/npm when it doesn't exist
-    fs.writeFile( dest + '/package.json', JSON.stringify( thisPackage ), cb );
+    fs.writeFile( dest + 'package.json', JSON.stringify( thisPackage ), cb );
 });
 
 
