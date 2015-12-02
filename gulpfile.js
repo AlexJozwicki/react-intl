@@ -11,8 +11,11 @@ const dest = 'build/';
 
 const babelOptions = {
     optional: [
-      'spec.protoToAssign',
-      'es7.classProperties'
+        "spec.protoToAssign",
+        "es7.classProperties",
+        "es7.functionBind",
+        "es7.decorators",
+        "es7.exportExtensions"
     ]
 };
 
