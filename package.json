@@ -1,6 +1,6 @@
 {
   "name": "react-intl-es6",
-  "version": "1.0.0-rc2",
+  "version": "1.0.0",
   "description": "React ES6 Components for internationalization.",
   "keywords": [
     "es6",
@@ -29,9 +29,9 @@
     "./lib/locales.js": false
   },
   "peerDependencies": {
-    "intl-format-cache": "2.0.4",
-    "intl-messageformat": "1.1.0",
-    "intl-relativeformat": "1.1.0",
+    "intl-format-cache": "^2.0.4",
+    "intl-messageformat": "^1.2.0",
+    "intl-relativeformat": "^1.2.0",
     "react": ">=0.13.3 <1.0.0"
   },
   "devDependencies": {
