@@ -82,7 +82,8 @@ export default class IntlApi {
             }, messages);
         } finally {
             if (message === undefined) {
-                throw new ReferenceError('Could not find Intl message: ' + path);
+                console.error('Could not find Intl message: ' + path);
+                return path;
             }
         }
 
